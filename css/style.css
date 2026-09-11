@@ -1,0 +1,82 @@
+/* ============================================================
+   SOLAR SYSTEM EXPLORER — STYLES
+   Layout, glass-panel UI, drawer, header, and misc chrome.
+   (Three.js canvas itself is unstyled — see js/scene.js)
+============================================================ */
+  html,body{margin:0;padding:0;background:#04050b;overflow:hidden;height:100%;font-family:'Exo 2',sans-serif;}
+  .font-display{font-family:'Orbitron',sans-serif;}
+  #canvas-container{position:fixed;inset:0;z-index:0;touch-action:none;cursor:grab;}
+  #canvas-container.dragging{cursor:grabbing;}
+  ::-webkit-scrollbar{width:6px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:#3b4560;border-radius:3px;}
+  .glass{
+    background: rgba(9,12,24,0.6);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .holo-panel{
+    position:relative;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(rgba(9,12,24,0.6), rgba(9,12,24,0.6)) padding-box,
+      linear-gradient(120deg, rgba(125,211,252,0.55), rgba(245,166,35,0.4), rgba(125,211,252,0.55)) border-box;
+    background-size: 100% 100%, 220% 220%;
+    animation: holoShift 10s ease infinite;
+    box-shadow: 0 0 26px rgba(125,211,252,0.09), inset 0 0 26px rgba(125,211,252,0.03);
+  }
+  @keyframes holoShift{
+    0%{ background-position: 0 0, 0% 50%; }
+    50%{ background-position: 0 0, 100% 50%; }
+    100%{ background-position: 0 0, 0% 50%; }
+  }
+  header{ position:fixed; }
+  header::after{
+    content:'';
+    position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:linear-gradient(90deg, transparent, rgba(125,211,252,0.65), transparent);
+    background-size:200% 100%;
+    animation: scanline 6s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes scanline{ 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+  header button, #compare-modal button, #drawer button, #explorer-panel button{
+    transition: box-shadow .25s ease, transform .15s ease, background-color .2s ease;
+  }
+  header button:hover, #compare-modal button:hover, #drawer button:hover{
+    box-shadow: 0 0 14px rgba(125,211,252,0.35);
+    transform: translateY(-1px);
+  }
+  .thumb{
+    background-size:cover; background-position:center;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 0 10px rgba(125,211,252,0.25);
+  }
+  .modal-overlay{ opacity:0; visibility:hidden; pointer-events:none; transition:opacity .3s ease, visibility 0s linear .3s; }
+  .modal-overlay.modal-open{ opacity:1; visibility:visible; pointer-events:auto; transition:opacity .3s ease, visibility 0s linear 0s; }
+  .modal-overlay .modal-panel{ transform:scale(0.92) translateY(10px); transition:transform .4s cubic-bezier(.16,.84,.44,1); }
+  .modal-overlay.modal-open .modal-panel{ transform:scale(1) translateY(0); }
+  #tooltip{
+    position:fixed;pointer-events:none;z-index:50;left:0;top:0;
+    transform:translate(-9999px,-9999px);
+    transition:opacity .15s ease;
+    opacity:0;
+  }
+  #tooltip.visible{opacity:1;}
+  #drawer{ transition: transform .55s cubic-bezier(.16,.84,.44,1); }
+  #loading-screen{transition:opacity .6s ease;}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:linear-gradient(90deg,#f5a623,#7dd3fc);outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(245,166,35,.8);cursor:pointer;border:2px solid #f5a623;}
+  input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #f5a623;cursor:pointer;}
+  .fade-in{animation:fadeIn .18s ease both;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+  .drawer-section{border-left:2px solid rgba(245,166,35,0.4);padding-left:12px;}
+  .drawer-section.blue{border-left-color:rgba(125,211,252,0.5);}
+  .glossary{border-bottom:1px dotted rgba(255,255,255,0.4);cursor:help;}
+  body.cinematic-mode header,
+  body.cinematic-mode #hint,
+  body.cinematic-mode #drawer,
+  body.cinematic-mode #compare-modal,
+  body.cinematic-mode #tooltip,
+  body.cinematic-mode #meteor-toast{ display:none !important; }
+  #cinematic-hint{ position:fixed; left:50%; bottom:20px; transform:translate(-50%,0); z-index:70; transition:opacity .8s ease; pointer-events:none; white-space:nowrap; }
